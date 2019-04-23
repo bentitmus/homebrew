@@ -13,7 +13,6 @@ class St < Formula
     sha256 "20707f7d694eef615c63c98c055db728a6922e68ccf287ca63933715781311e6" => :sierra
   end
 
-  depends_on "dmenu"
   depends_on "freetype"
   depends_on :x11
 
