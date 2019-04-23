@@ -13,9 +13,12 @@ class Dmenu < Formula
   end
 
   depends_on :x11
+  depends_on "freetype"
 
   def install
-    system "make", "PREFIX=#{prefix}", "install"
+    freetype = Formula["freetype"].opt_prefix
+    ftflags = system "#{freetype}/bin/freetype-config", "--cflags"
+    system "make", "PREFIX=#{prefix}", "CFLAGS=#{ftflags}", "install"
   end
 
   test do
