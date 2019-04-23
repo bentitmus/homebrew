@@ -17,8 +17,8 @@ class Dmenu < Formula
 
   def install
     freetype = Formula["freetype"].opt_prefix
-    ENV.append "CFLAGS", `#{freetype}/bin/freetype-config --cflags`.strip
-    system "make", "PREFIX=#{prefix}", "CFLAGS=#{ENV.cflags}", "install"
+    ftinc = `#{freetype}/bin/freetype-config --prefix`.strip
+    system "make", "PREFIX=#{prefix}", "FREETYPEINC=#{ftinc}/include/freetype2", "install"
   end
 
   test do
