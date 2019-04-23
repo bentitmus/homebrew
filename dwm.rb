@@ -1,8 +1,8 @@
 class Dwm < Formula
   desc "Dynamic window manager"
   homepage "https://dwm.suckless.org/"
-  url "https://dl.suckless.org/dwm/dwm-6.2.tar.gz"
-  sha256 "97902e2e007aaeaa3c6e3bed1f81785b817b7413947f1db1d3b62b8da4cd110e"
+  url "https://github.com/bentitmus/dwm/archive/6.1.1.tar.gz"
+  sha256 "727abe33e80aa773cf42904d4ea31f80dce9cacdd116ad9205e10e58bb4cc40a"
   revision 1
   head "https://git.suckless.org/dwm", :using => :git
 
@@ -14,28 +14,13 @@ class Dwm < Formula
   end
 
   depends_on "dmenu"
+  depends_on "freetype"
   depends_on :x11
 
   def install
-    # The dwm default quit keybinding Mod1-Shift-q collides with
-    # the Mac OS X Log Out shortcut in the Apple menu.
-    inreplace "config.def.h",
-    "{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },",
-    "{ MODKEY|ControlMask,           XK_q,      quit,           {0} },"
-    inreplace "dwm.1", '.B Mod1\-Shift\-q', '.B Mod1\-Control\-q'
-    system "make", "PREFIX=#{prefix}", "install"
-  end
-
-  def caveats; <<~EOS
-    In order to use the Mac OS X command key for dwm commands,
-    change the X11 keyboard modifier map using xmodmap (1).
-
-    e.g. by running the following command from $HOME/.xinitrc
-    xmodmap -e 'remove Mod2 = Meta_L' -e 'add Mod1 = Meta_L'&
-
-    See also https://gist.github.com/311377 for a handful of tips and tricks
-    for running dwm on Mac OS X.
-  EOS
+    freetype = Formula["freetype"].opt_prefix
+    ftinc = `#{freetype}/bin/freetype-config --prefix`.strip
+    system "make", "PREFIX=#{prefix}", "FREETYPEINC=#{ftinc}/include/freetype2", "install"
   end
 
   test do
