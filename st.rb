@@ -1,10 +1,10 @@
 class St < Formula
-  desc "Dynamic window manager"
-  homepage "https://dwm.suckless.org/"
-  url "https://dl.suckless.org/dwm/dwm-6.2.tar.gz"
-  sha256 "97902e2e007aaeaa3c6e3bed1f81785b817b7413947f1db1d3b62b8da4cd110e"
+  desc "Suckless Terminal"
+  homepage "https://st.suckless.org/"
+  url "https://github.com/bentitmus/st/archive/0.8.2.tar.gz"
+  sha256 "2f5e486201ed6c2abf469b89bba9c2aec35dd033394a82d4d3e424c84d18bec7"
   revision 1
-  head "https://git.suckless.org/dwm", :using => :git
+  head "https://git.suckless.org/st", :using => :git
 
   bottle do
     cellar :any_skip_relocation
@@ -14,31 +14,16 @@ class St < Formula
   end
 
   depends_on "dmenu"
+  depends_on "freetype"
   depends_on :x11
 
   def install
-    # The dwm default quit keybinding Mod1-Shift-q collides with
-    # the Mac OS X Log Out shortcut in the Apple menu.
-    inreplace "config.def.h",
-    "{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },",
-    "{ MODKEY|ControlMask,           XK_q,      quit,           {0} },"
-    inreplace "dwm.1", '.B Mod1\-Shift\-q', '.B Mod1\-Control\-q'
-    system "make", "PREFIX=#{prefix}", "install"
-  end
-
-  def caveats; <<~EOS
-    In order to use the Mac OS X command key for dwm commands,
-    change the X11 keyboard modifier map using xmodmap (1).
-
-    e.g. by running the following command from $HOME/.xinitrc
-    xmodmap -e 'remove Mod2 = Meta_L' -e 'add Mod1 = Meta_L'&
-
-    See also https://gist.github.com/311377 for a handful of tips and tricks
-    for running dwm on Mac OS X.
-  EOS
+    freetype = Formula["freetype"].opt_prefix
+    ftinc = `#{freetype}/bin/freetype-config --prefix`.strip
+    system "make", "PREFIX=#{prefix}", "FREETYPEINC=#{ftinc}/include/freetype2", "install"
   end
 
   test do
-    assert_match /#{version}/, shell_output("#{bin}/dwm -v 2>&1", 1)
+    assert_match /#{version}/, shell_output("#{bin}/st -v 2>&1", 1)
   end
 end
