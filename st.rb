@@ -1,8 +1,8 @@
 class St < Formula
   desc "Suckless Terminal"
   homepage "https://st.suckless.org/"
-  url "https://github.com/bentitmus/st/archive/0.8.3.tar.gz"
-  sha256 "cb6c2a72d8b0fad15e059c3a6550344a7418c13932a7eb086c51228b2f5320e3"
+  url "https://github.com/bentitmus/st/archive/0.8.4.tar.gz"
+  sha256 "5f3ea19de4fb052c6a06179183ad1717bb18dfbcad9d78aa9c2b21f623e7b96d"
   revision 1
   head "https://git.suckless.org/st", :using => :git
 
