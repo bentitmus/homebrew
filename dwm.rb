@@ -1,8 +1,8 @@
 class Dwm < Formula
   desc "Dynamic window manager"
   homepage "https://dwm.suckless.org/"
-  url "https://github.com/bentitmus/dwm/archive/6.1.1.tar.gz"
-  sha256 "727abe33e80aa773cf42904d4ea31f80dce9cacdd116ad9205e10e58bb4cc40a"
+  url "https://github.com/bentitmus/dwm/archive/6.1.2.tar.gz"
+  sha256 "f6942633fcc19ccbc5ca7cb1bc92d139309534982ca3c31b21ad90ae19f04f0e"
   revision 1
   head "https://git.suckless.org/dwm", :using => :git
 
