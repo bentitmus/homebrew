@@ -1,25 +1,26 @@
+# typed: false
+# frozen_string_literal: true
+
 # Example homebrew formula for Rosie Pattern Language
 # https://gitlab.com/rosie-community/homebrew-rosie.git
 
 $ROSIE_VERSION = "1.1.0"
 
 class Rosie < Formula
-  desc "The Rosie Project's pattern language and pattern matching engine"
+  desc "Project's pattern language and pattern matching engine"
   homepage "https://rosie-lang.org"
+  url "https://gitlab.com/rosie-pattern-language/rosie.git", tag: "v#{$ROSIE_VERSION}"
   version $ROSIE_VERSION
-  url "https://gitlab.com/rosie-pattern-language/rosie.git", :tag => "v#{$ROSIE_VERSION}"
-  head "https://gitlab.com/rosie-pattern-language/rosie.git", :branch => "master"
-  #sha256 ""
+  head "https://gitlab.com/rosie-pattern-language/rosie.git", branch: "master"
+  # sha256 ""
 
-  #depends_on :xcode => :build
+  # depends_on :xcode => :build
 
   def install
     ENV.deparallelize
-    if prefix=="" then
-      odie "homebrew prefix is not set!  (usually this is /usr/local)"
-    end
+    odie "homebrew prefix is not set!  (usually this is /usr/local)" if prefix==""
     system "make", "clean"
-    system "make", "install", "BREW=true", "DESTDIR="+prefix
+    system "make", "install", "BREW=true", "DESTDIR=#{prefix}"
     ohai "Rosie installed successfully!"
     ohai "    RPL libraries, documentation, etc are in #{HOMEBREW_PREFIX}/lib/rosie"
     ohai "    Executable will be linked (by brew) to #{HOMEBREW_PREFIX}/bin/rosie"
