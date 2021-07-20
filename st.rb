@@ -17,7 +17,8 @@ class St < Formula
 
   depends_on "pkg-config" => :build
   depends_on "freetype"
-  depends_on :x11
+  depends_on "fontconfig"
+  depends_on "libx11"
 
   def install
     freetype = Formula["freetype"].opt_prefix
